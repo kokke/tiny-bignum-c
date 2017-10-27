@@ -6,7 +6,7 @@ Big number library - arithmetic on multiple-precision unsigned integers.
 
 This library is an implementation of arithmetic on arbitrarily large integers.
 
-The difference between this, and what you find online, is that the data structure
+The difference between this and other impelemtations, is that the data structure
 has optimal memory utilization (i.e. a 1024 bit integer takes up 128 bytes RAM),
 and all memory is allocated statically: no dynamic allocation for better or worse.
 
