@@ -27,26 +27,36 @@ The main design goal of this library is to be small, correct, self contained and
 
 
 ### API
-This is the public / exported API:
+This is the data-structure used, where DTYPE is `#define`'d to `uint8_t`, `uint16_t` or `uint32_t`.
+```C
+struct bn
+{
+  DTYPE array[BN_ARRAY_SIZE];
+};
+```
 
+This is the public / exported API:```
 ```C
 void bignum_init(struct bn* n); /* n gets zero-initialized */
 void bignum_from_int(struct bn* n, DTYPE_TMP i);
 int  bignum_to_int(struct bn* n);
 void bignum_from_string(struct bn* n, char* str, int nbytes);
 void bignum_to_string(struct bn* n, char* str, int maxsize);
+
 /* Basic arithmetic operations: */
 void bignum_add(struct bn* a, struct bn* b, struct bn* c); /* c = a + b */
 void bignum_sub(struct bn* a, struct bn* b, struct bn* c); /* c = a - b */
 void bignum_mul(struct bn* a, struct bn* b, struct bn* c); /* c = a * b */
 void bignum_div(struct bn* a, struct bn* b, struct bn* c); /* c = a / b */
 void bignum_mod(struct bn* a, struct bn* b, struct bn* c); /* c = a % b */
+
 /* Bitwise operations: */
 void bignum_and(struct bn* a, struct bn* b, struct bn* c); /* c = a & b */
 void bignum_or(struct bn* a, struct bn* b, struct bn* c);  /* c = a | b */
 void bignum_xor(struct bn* a, struct bn* b, struct bn* c); /* c = a ^ b */
 void bignum_lshift(struct bn* a, struct bn* b, int nbits); /* b = a << nbits */
 void bignum_rshift(struct bn* a, struct bn* b, int nbits); /* b = a >> nbits */
+
 /* Special operators and comparison */
 int  bignum_cmp(struct bn* a, struct bn* b);               /* Compare: returns LARGER, EQUAL or SMALLER */
 int  bignum_is_zero(struct bn* n);                         /* For comparison with zero */
