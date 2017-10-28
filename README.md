@@ -76,7 +76,7 @@ Run `make clean all test` for examples of usage and for some random testing.
 
 ### Examples
 
-See [`tests/factorial.c`](https://github.com/kokke/tiny-bignum-c/blob/master/tests/factorial.c) for an example of using tih slibrary to calculate factorial(100) or 100!.
+See [`tests/factorial.c`](https://github.com/kokke/tiny-bignum-c/blob/master/tests/factorial.c) for an example of how to calculate factorial(100) or 100! (a 150+ digit number).
 
 
 ### FAQ
