@@ -1,7 +1,7 @@
 # tiny-bignum-c
 # A small multiple-precision integer implementation in C
 ### Description
-Small portable [Arbitrary-precision unsigned integer arithmetic](https://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic) in C
+Small portable [Arbitrary-precision unsigned integer arithmetic](https://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic) in C, for calculating with large numbers.
 
 Uses an array of `uint8_t`, `uint16_t` or `uint32_t` as underlying data-type utilizing all bits in each word.
 
