@@ -20,7 +20,7 @@ The main design goal of this library is to be small, correct, self contained and
 
 
 ### Notable features and omissions
-- Small code and binary size: <500 SLOC, ~3kb binary for x86. Statically #define'd memory usage / allocation.
+- Small code and binary size: ~500 SLOC, ~3kb binary for x86. Statically #define'd memory usage / allocation.
 - No use of dynamic memory allocation (i.e. no calls to `malloc` / `free`).
 - Randomized testing validated against Python's big-integers
 - Optimal memory utilization, number base is 1 + UINT{8,16,32}_MAX.
