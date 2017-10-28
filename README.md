@@ -35,7 +35,7 @@ struct bn
 };
 ```
 
-This is the public / exported API:```
+This is the public / exported API:
 ```C
 void bignum_init(struct bn* n); /* n gets zero-initialized */
 void bignum_from_int(struct bn* n, DTYPE_TMP i);
