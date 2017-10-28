@@ -9,7 +9,7 @@ The number-base is 0xFF, 0xFFFF or 0xFFFFFFFF depending on chosen word-size - se
 
 No dynamic memory management is utilized, and `stdio.h` is only used for testing functions parsing to and from hex-strings.
 
-Run `make all test` for an example of utilizations and for some random testing.
+Run `make all test` for examples of usage and for some random testing.
 
 The test suite uses Python's integer implementation for verification (which is GMP underneath).
 
