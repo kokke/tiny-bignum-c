@@ -80,9 +80,9 @@ See [`tests/factorial.c`](https://github.com/kokke/tiny-bignum-c/blob/master/tes
 
 
 ### FAQ
-- *Q: What differentiates this library from other C regex implementations?*
+- *Q: What differentiates this library from other C big integer implementations?*
 
-  A: Small size for one. ~500 lines of C-code compiling to 2-3kb ROM, using very little RAM.
+  A: Small size for one. ~500 lines of C-code compiling to 2-3kb ROM, using only modest amounts of RAM.
      Utilizing all bits by using a number base 2^{8,16,32} instead of 10 which is a usual choice.
 
 
