@@ -12,7 +12,7 @@ No dynamic memory management is utilized, and `stdio.h` is only used for testing
 
 ### Current status
 
-Basic arithmetic (+, -, *, /, %) and bitwise operations (&, |, ^. <<, >>) are supported.
+Basic arithmetic (+, -, *, /, %) and bitwise operations (&, |, ^. <<, >>) plus increments, decrements and comparisons are supported. 
 
 
 ### Design goals
