@@ -343,7 +343,7 @@ void bignum_rshift(struct bn* a, struct bn* b, int nbits)
   require(b, "b is null");
   require(nbits >= 0, "no negative shifts");
 
-/* Handle shift in multiples of word-size */
+  /* Handle shift in multiples of word-size */
   const int nbits_pr_word = (WORD_SIZE * 8);
   int nwords = nbits / nbits_pr_word;
   if (nwords != 0)
@@ -437,7 +437,7 @@ int bignum_cmp(struct bn* a, struct bn* b)
   require(a, "a is null");
   require(b, "b is null");
 
-  int i = BN_ARRAY_SIZE - 1;
+  int i = BN_ARRAY_SIZE;
   do
   {
     i -= 1; /* Decrement first, to start with last array element */
