@@ -58,7 +58,7 @@ static struct test oracle[] =
   {'*', 1000000000, 2, 2000000000 },
   {'*', 2, 1000000000, 2000000000 },
   {'*', 1000000000, 4, 4000000000 },
-//{'/', 0xFFFFFFFF, 0xFFFFFFFF, 1 },
+  {'/', 0xFFFFFFFF, 0xFFFFFFFF, 1 },
   {'/', 0xFFFFFFFF, 0x10000, 0xFFFF },
   {'/', 0xFFFFFFFF, 0x1000, 0xFFFFF },
   {'/', 0xFFFFFFFF, 0x100, 0xFFFFFF },
@@ -78,7 +78,7 @@ static struct test oracle[] =
   {'/', 20, 7, 2 },
   {'/', 0, 12, 0 },
   {'/', 10, 1, 10 },
-//{'/', 0xFFFFFFFF, 1, 0xFFFFFFFF },
+  {'/', 0xFFFFFFFF, 1, 0xFFFFFFFF },
   {'/', 0xFFFFFFFF, 0x10000, 0xFFFF },
 //./build/test_random 3 0000000000b36627 00000000000dff95 000000000000000c
   {'/', 0xb36627, 0x0dff95, 0x0c },
