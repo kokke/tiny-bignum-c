@@ -287,13 +287,23 @@ void bignum_div(struct bn* a, struct bn* b, struct bn* c)
   bignum_assign(&denom, b);                   // denom = b
   bignum_assign(&tmp, a);                     // tmp   = a
 
+  const DTYPE half_max = 1 + (DTYPE)(MAX_VAL / 2);
+  bool overflow = false;
   while (bignum_cmp(&denom, a) != LARGER)     // while (denom <= a) {
   {
+    if (denom.array[BN_ARRAY_SIZE - 1] >= half_max)
+    {
+      overflow = true;
+      break;
+    }
     _lshift_one_bit(&current);                //   current <<= 1;
     _lshift_one_bit(&denom);                  //   denom <<= 1;
   }
-  _rshift_one_bit(&denom);                    // denom >>= 1;
-  _rshift_one_bit(&current);                  // current >>= 1;
+  if (!overflow)
+  {
+    _rshift_one_bit(&denom);                  // denom >>= 1;
+    _rshift_one_bit(&current);                // current >>= 1;
+  }
   bignum_init(c);                             // int answer = 0;
 
   while (!bignum_is_zero(&current))           // while (current != 0)
