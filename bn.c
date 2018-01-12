@@ -287,7 +287,7 @@ void bignum_div(struct bn* a, struct bn* b, struct bn* c)
   bignum_assign(&denom, b);                   // denom = b
   bignum_assign(&tmp, a);                     // tmp   = a
 
-  const DTYPE half_max = 1 + (DTYPE)(MAX_VAL / 2);
+  const DTYPE_TMP half_max = 1 + (DTYPE_TMP)(MAX_VAL / 2);
   bool overflow = false;
   while (bignum_cmp(&denom, a) != LARGER)     // while (denom <= a) {
   {
