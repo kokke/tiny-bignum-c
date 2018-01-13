@@ -11,6 +11,7 @@ static void test_evil(void)
   ntests += 1;
   /*
     Evil test case triggering infinite-loop - reported by jepler@github
+    https://github.com/kokke/tiny-bignum-c/issues/2
   */
   {
     struct bn a, b, c;
