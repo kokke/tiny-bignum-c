@@ -24,12 +24,38 @@ static void test_evil(void)
 }
 
 
+static void test_over_and_underflow(void)
+{
+  ntests += 1;
+  /*
+    Test case triggering overflow-bug - reported by XYlearn@github
+    https://github.com/kokke/tiny-bignum-c/issues/3
+  */
+  {
+    struct bn a;
+    struct bn b;
+    struct bn c;
+
+    bignum_from_int(&a, 0);
+    bignum_from_int(&b, 1);
+    bignum_sub(&a, &b, &a);
+    bignum_from_int(&b, 3);
+    bignum_add(&a, &b, &a);
+    bignum_from_int(&c, 2);
+    assert(bignum_cmp(&a, &c) == EQUAL);
+  }
+  /* test passed if assertion doesn't fail. */
+  npassed += 1;
+}
+
+
 
 int main()
 {
   printf("\nRunning hand-picked test cases:\n");
 
   test_evil();
+  test_over_and_underflow();
 
   printf("\n%d/%d tests successful.\n", npassed, ntests);
   printf("\n");
