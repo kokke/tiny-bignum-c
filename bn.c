@@ -212,7 +212,7 @@ void bignum_add(struct bn* a, struct bn* b, struct bn* c)
   int i;
   for (i = 0; i < BN_ARRAY_SIZE; ++i)
   {
-    tmp = a->array[i] + b->array[i] + carry;
+    tmp = (DTYPE_TMP)a->array[i] + b->array[i] + carry;
     carry = (tmp > MAX_VAL);
     c->array[i] = (tmp & MAX_VAL);
   }
