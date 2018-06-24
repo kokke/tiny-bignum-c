@@ -549,8 +549,7 @@ void bignum_isqrt(struct bn a*, struct bn* b)
     }
     bignum_sub(&high,b,&mid);
     _rshift_one_bit(&mid);
-    bignum_add(b,&mid,&tmp);
-    bignum_assign(&mid,&tmp);
+    bignum_add(b,&mid,&mid);
     bignum_inc(&mid);
   }
 }
