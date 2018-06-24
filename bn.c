@@ -387,7 +387,7 @@ void bignum_mod(struct bn* a, struct bn* b, struct bn* c)
 
   struct bn tmp;
 
-  bignum_divmod(a,b,tmp,c);
+  bignum_divmod(a,b,&tmp,c);
 }
 
 void bignum_divmod(struct bn* a, struct bn* b, struct bn* c, struct bn* d)
