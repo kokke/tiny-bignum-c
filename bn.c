@@ -545,14 +545,14 @@ void bignum_isqrt(struct bn *a, struct bn* b)
   require(a, "a is null");
   require(b, "b is null");
 
-  struct bn high, mid, tmp;
+  struct bn low, high, mid, tmp;
 
-  bignum_init(b);
+  bignum_init(&low);
   bignum_assign(&high, a);
   bignum_rshift(&high, &mid, 1);
   bignum_inc(&mid);
 
-  while (bignum_cmp(&high, b) > 0) 
+  while (bignum_cmp(&high, &low) > 0) 
   {
     bignum_mul(&mid, &mid, &tmp);
     if (bignum_cmp(&tmp, a) > 0) 
@@ -562,13 +562,14 @@ void bignum_isqrt(struct bn *a, struct bn* b)
     }
     else 
     {
-      bignum_assign(b, &mid);
+      bignum_assign(&low, &mid);
     }
-    bignum_sub(&high,b,&mid);
+    bignum_sub(&high,&low,&mid);
     _rshift_one_bit(&mid);
-    bignum_add(b,&mid,&mid);
+    bignum_add(&low,&mid,&mid);
     bignum_inc(&mid);
   }
+  bignum_assign(b,&low);
 }
 
 
