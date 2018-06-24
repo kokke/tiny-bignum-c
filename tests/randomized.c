@@ -4,7 +4,7 @@
 #include <string.h>
 #include "bn.h"
 
-enum { ADD, SUB, MUL, DIV, AND, OR, XOR, POW, MOD, RSHFT, LSHFT };
+enum { ADD, SUB, MUL, DIV, AND, OR, XOR, POW, MOD, RSHFT, LSHFT, ISQRT };
 
 int main(int argc, char** argv)
 {
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     case XOR:   bignum_xor(&a, &b, &res);   break;
     case POW:   bignum_pow(&a, &b, &res);   break;
     case MOD:   bignum_mod(&a, &b, &res);   break;
-
+    case ISQRT: bignum_isqrt(&a, &res);     break;
     case RSHFT:
     {
       bignum_rshift(&a, &res, bignum_to_int(&b));
@@ -61,6 +61,7 @@ int main(int argc, char** argv)
     {
       bignum_lshift(&a, &res, bignum_to_int(&b));
     } break;
+    
 
     default:
       printf("default switch-case hit: unknown operator '%d' \n", oper);
@@ -81,7 +82,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  //assert(bignum_cmp(&a_before, &a) == EQUAL);
+  assert(bignum_cmp(&a_before, &a) == EQUAL);
   assert(bignum_cmp(&b_before, &b) == EQUAL);
 
   return 0;

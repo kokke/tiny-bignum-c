@@ -523,7 +523,7 @@ void bignum_pow(struct bn* a, struct bn* b, struct bn* c)
   }
 }
 
-void bignum_isqrt(struct bn a*, struct bn* b)
+void bignum_isqrt(struct bn *a, struct bn* b)
 {
   require(a, "a is null");
   require(b, "b is null");

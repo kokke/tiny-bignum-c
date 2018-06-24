@@ -16,6 +16,7 @@ from random import Random, choice
 import subprocess
 import sys
 import os
+import math
 
 
 TEST_BINARY = "./build/test_random"
@@ -48,7 +49,8 @@ POW = 7
 MOD = 8
 RSHIFT = 9
 LSHIFT = 10
-NUM_OPERATIONS = 11 # this variable should be 1 larger than the last supported operation ^^
+ISQRT = 11
+NUM_OPERATIONS = 12 # this variable should be 1 larger than the last supported operation ^^
 
 # Instantiate object of Random-class for choosing an operand and two operators
 rand = Random()
@@ -117,6 +119,8 @@ while i < NTESTS:
     expected = oper1 << oper2
   elif operation == RSHIFT:
     expected = oper1 >> oper2
+  elif operation == ISQRT:
+		expected = int(math.sqrt(oper1));
 
 
   # Convert to string to pass to C program
