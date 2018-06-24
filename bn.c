@@ -379,6 +379,23 @@ void bignum_rshift(struct bn* a, struct bn* b, int nbits)
 void bignum_mod(struct bn* a, struct bn* b, struct bn* c)
 {
   /*
+    Take divmod and throw away div part
+  */
+  require(a, "a is null");
+  require(b, "b is null");
+  require(c, "c is null");
+
+  struct bn tmp;
+
+  bignum_divmod(a,b,&tmp,c);
+}
+
+void bignum_divmod(struct bn* a, struct bn* b, struct bn* c, struct bn* d)
+{
+  /*
+    Puts a%b in d
+    and a/b in c
+
     mod(a,b) = a - ((a / b) * b)
 
     example:
@@ -397,7 +414,7 @@ void bignum_mod(struct bn* a, struct bn* b, struct bn* c)
   bignum_mul(c, b, &tmp);
 
   /* c = a - tmp */
-  bignum_sub(a, &tmp, c);
+  bignum_sub(a, &tmp, d);
 }
 
 
