@@ -523,6 +523,38 @@ void bignum_pow(struct bn* a, struct bn* b, struct bn* c)
   }
 }
 
+void bignum_isqrt(struct bn a*, struct bn* b)
+{
+  require(a, "a is null");
+  require(b, "b is null");
+
+  struct bn high, mid, tmp;
+
+  bignum_init(b);
+  bignum_assign(&high, a);
+  bignum_rshift(&high, &mid, 1);
+  bignum_inc(&mid);
+
+  while (bignum_cmp(&high, b) > 0) 
+  {
+    bignum_mul(&mid, &mid, &tmp);
+    if (bignum_cmp(&tmp, a) > 0) 
+    {
+      bignum_assign(&high, &mid);
+      bignum_dec(&high);
+    }
+    else 
+    {
+      bignum_assign(b, &mid);
+    }
+    bignum_sub(&high,b,&mid);
+    _rshift_one_bit(&mid);
+    bignum_add(b,&mid,&tmp);
+    bignum_assign(&mid,&tmp);
+    bignum_inc(&mid);
+  }
+}
+
 
 void bignum_assign(struct bn* dst, struct bn* src)
 {
