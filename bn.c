@@ -325,12 +325,13 @@ void bignum_lshift(struct bn* a, struct bn* b, int nbits)
   require(b, "b is null");
   require(nbits >= 0, "no negative shifts");
 
+  bignum_assign(b, a);
   /* Handle shift in multiples of word-size */
   const int nbits_pr_word = (WORD_SIZE * 8);
   int nwords = nbits / nbits_pr_word;
   if (nwords != 0)
   {
-    _lshift_word(a, nwords);
+    _lshift_word(b, nwords);
     nbits -= (nwords * nbits_pr_word);
   }
 
@@ -339,11 +340,10 @@ void bignum_lshift(struct bn* a, struct bn* b, int nbits)
     int i;
     for (i = (BN_ARRAY_SIZE - 1); i > 0; --i)
     {
-      a->array[i] = (a->array[i] << nbits) | (a->array[i - 1] >> ((8 * WORD_SIZE) - nbits));
+      b->array[i] = (b->array[i] << nbits) | (b->array[i - 1] >> ((8 * WORD_SIZE) - nbits));
     }
-    a->array[i] <<= nbits;
+    b->array[i] <<= nbits;
   }
-  bignum_assign(b, a);
 }
 
 
@@ -352,13 +352,14 @@ void bignum_rshift(struct bn* a, struct bn* b, int nbits)
   require(a, "a is null");
   require(b, "b is null");
   require(nbits >= 0, "no negative shifts");
-
+  
+  bignum_assign(b, a);
   /* Handle shift in multiples of word-size */
   const int nbits_pr_word = (WORD_SIZE * 8);
   int nwords = nbits / nbits_pr_word;
   if (nwords != 0)
   {
-    _rshift_word(a, nwords);
+    _rshift_word(b, nwords);
     nbits -= (nwords * nbits_pr_word);
   }
 
@@ -367,11 +368,11 @@ void bignum_rshift(struct bn* a, struct bn* b, int nbits)
     int i;
     for (i = 0; i < (BN_ARRAY_SIZE - 1); ++i)
     {
-      a->array[i] = (a->array[i] >> nbits) | (a->array[i + 1] << ((8 * WORD_SIZE) - nbits));
+      b->array[i] = (b->array[i] >> nbits) | (b->array[i + 1] << ((8 * WORD_SIZE) - nbits));
     }
-    a->array[i] >>= nbits;
+    b->array[i] >>= nbits;
   }
-  bignum_assign(b, a);
+  
 }
 
 
