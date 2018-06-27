@@ -325,12 +325,13 @@ void bignum_lshift(struct bn* a, struct bn* b, int nbits)
   require(b, "b is null");
   require(nbits >= 0, "no negative shifts");
 
+  bignum_assign(b, a);
   /* Handle shift in multiples of word-size */
   const int nbits_pr_word = (WORD_SIZE * 8);
   int nwords = nbits / nbits_pr_word;
   if (nwords != 0)
   {
-    _lshift_word(a, nwords);
+    _lshift_word(b, nwords);
     nbits -= (nwords * nbits_pr_word);
   }
 
@@ -339,11 +340,10 @@ void bignum_lshift(struct bn* a, struct bn* b, int nbits)
     int i;
     for (i = (BN_ARRAY_SIZE - 1); i > 0; --i)
     {
-      a->array[i] = (a->array[i] << nbits) | (a->array[i - 1] >> ((8 * WORD_SIZE) - nbits));
+      b->array[i] = (b->array[i] << nbits) | (b->array[i - 1] >> ((8 * WORD_SIZE) - nbits));
     }
-    a->array[i] <<= nbits;
+    b->array[i] <<= nbits;
   }
-  bignum_assign(b, a);
 }
 
 
@@ -352,13 +352,14 @@ void bignum_rshift(struct bn* a, struct bn* b, int nbits)
   require(a, "a is null");
   require(b, "b is null");
   require(nbits >= 0, "no negative shifts");
-
+  
+  bignum_assign(b, a);
   /* Handle shift in multiples of word-size */
   const int nbits_pr_word = (WORD_SIZE * 8);
   int nwords = nbits / nbits_pr_word;
   if (nwords != 0)
   {
-    _rshift_word(a, nwords);
+    _rshift_word(b, nwords);
     nbits -= (nwords * nbits_pr_word);
   }
 
@@ -367,17 +368,34 @@ void bignum_rshift(struct bn* a, struct bn* b, int nbits)
     int i;
     for (i = 0; i < (BN_ARRAY_SIZE - 1); ++i)
     {
-      a->array[i] = (a->array[i] >> nbits) | (a->array[i + 1] << ((8 * WORD_SIZE) - nbits));
+      b->array[i] = (b->array[i] >> nbits) | (b->array[i + 1] << ((8 * WORD_SIZE) - nbits));
     }
-    a->array[i] >>= nbits;
+    b->array[i] >>= nbits;
   }
-  bignum_assign(b, a);
+  
 }
 
 
 void bignum_mod(struct bn* a, struct bn* b, struct bn* c)
 {
   /*
+    Take divmod and throw away div part
+  */
+  require(a, "a is null");
+  require(b, "b is null");
+  require(c, "c is null");
+
+  struct bn tmp;
+
+  bignum_divmod(a,b,&tmp,c);
+}
+
+void bignum_divmod(struct bn* a, struct bn* b, struct bn* c, struct bn* d)
+{
+  /*
+    Puts a%b in d
+    and a/b in c
+
     mod(a,b) = a - ((a / b) * b)
 
     example:
@@ -396,7 +414,7 @@ void bignum_mod(struct bn* a, struct bn* b, struct bn* c)
   bignum_mul(c, b, &tmp);
 
   /* c = a - tmp */
-  bignum_sub(a, &tmp, c);
+  bignum_sub(a, &tmp, d);
 }
 
 
@@ -520,6 +538,38 @@ void bignum_pow(struct bn* a, struct bn* b, struct bn* c)
     /* c = tmp */
     bignum_assign(c, &tmp);
   }
+}
+
+void bignum_isqrt(struct bn *a, struct bn* b)
+{
+  require(a, "a is null");
+  require(b, "b is null");
+
+  struct bn low, high, mid, tmp;
+
+  bignum_init(&low);
+  bignum_assign(&high, a);
+  bignum_rshift(&high, &mid, 1);
+  bignum_inc(&mid);
+
+  while (bignum_cmp(&high, &low) > 0) 
+  {
+    bignum_mul(&mid, &mid, &tmp);
+    if (bignum_cmp(&tmp, a) > 0) 
+    {
+      bignum_assign(&high, &mid);
+      bignum_dec(&high);
+    }
+    else 
+    {
+      bignum_assign(&low, &mid);
+    }
+    bignum_sub(&high,&low,&mid);
+    _rshift_one_bit(&mid);
+    bignum_add(&low,&mid,&mid);
+    bignum_inc(&mid);
+  }
+  bignum_assign(b,&low);
 }
 
 
