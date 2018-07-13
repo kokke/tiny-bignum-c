@@ -48,6 +48,27 @@ static void test_over_and_underflow(void)
   npassed += 1;
 }
 
+static void test_rshift_largish_number(void)
+{
+  ntests += 1;
+  /*
+    Test case triggering rshift-bug - reported by serpilliere
+    https://github.com/kokke/tiny-bignum-c/pull/7
+  */
+  {
+    struct bn n1, n2, n3;
+
+    bignum_from_string(&n1, "11112222333344445555666677778888", 32);
+    bignum_from_string(&n3, "1111222233334444", 16);
+    bignum_rshift(&n1, &n2, 64);
+
+    /* Check that (0x11112222333344445555666677778888 >> 64) == 0x1111222233334444 */
+    assert(bignum_cmp(&n2, &n3) == EQUAL);
+  }
+  /* test passed if assertion doesn't fail. */
+  npassed += 1;
+}
+
 
 
 int main()
@@ -56,6 +77,7 @@ int main()
 
   test_evil();
   test_over_and_underflow();
+  test_rshift_largish_number();
 
   printf("\n%d/%d tests successful.\n", npassed, ntests);
   printf("\n");
