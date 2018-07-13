@@ -594,8 +594,6 @@ static void _rshift_word(struct bn* a, int nwords)
   require(nwords >= 0, "no negative shifts");
 
   int i;
-
-
   if (nwords >= BN_ARRAY_SIZE)
   {
     for (i = 0; i < BN_ARRAY_SIZE; ++i)
@@ -605,12 +603,10 @@ static void _rshift_word(struct bn* a, int nwords)
     return;
   }
 
-
   for (i = 0; i < BN_ARRAY_SIZE - nwords; ++i)
   {
     a->array[i] = a->array[i + nwords];
   }
-
   for (; i < BN_ARRAY_SIZE; ++i)
   {
     a->array[i] = 0;
