@@ -518,19 +518,22 @@ void bignum_pow(struct bn* a, struct bn* b, struct bn* c)
   }
   else
   {
+    struct bn bcopy;
+    bignum_assign(&bcopy, b);
+
     /* Copy a -> tmp */
     bignum_assign(&tmp, a);
 
-    bignum_dec(b);
+    bignum_dec(&bcopy);
  
     /* Begin summing products: */
-    while (!bignum_is_zero(b))
+    while (!bignum_is_zero(&bcopy))
     {
 
       /* c = tmp * tmp */
       bignum_mul(&tmp, a, c);
       /* Decrement b by one */
-      bignum_dec(b);
+      bignum_dec(&bcopy);
 
       bignum_assign(&tmp, c);
     }
