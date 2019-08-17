@@ -97,6 +97,7 @@ void bignum_to_string(struct bn* n, char* str, int maxsize);
 void bignum_add(struct bn* a, struct bn* b, struct bn* c); /* c = a + b */
 void bignum_sub(struct bn* a, struct bn* b, struct bn* c); /* c = a - b */
 void bignum_mul(struct bn* a, struct bn* b, struct bn* c); /* c = a * b */
+void bignum_mul_alt(struct bn *a, struct bn *b, struct bn *c); /* c = a * b alternative method using columns instead of rows */
 void bignum_div(struct bn* a, struct bn* b, struct bn* c); /* c = a / b */
 void bignum_mod(struct bn* a, struct bn* b, struct bn* c); /* c = a % b */
 void bignum_divmod(struct bn* a, struct bn* b, struct bn* c, struct bn* d); /* c = a/b, d = a%b */
