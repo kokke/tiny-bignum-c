@@ -101,7 +101,8 @@ void bignum_from_string(struct bn* n, char* str, int nbytes)
   require(str, "str is null");
   require(nbytes > 0, "nbytes must be positive");
   require((nbytes & 1) == 0, "string format must be in hex -> equal number of bytes");
-
+  require((nbytes % (sizeof(DTYPE) * 2)) == 0, "string length must be a multiple of (sizeof(DTYPE) * 2) characters");
+  
   bignum_init(n);
 
   DTYPE tmp;                        /* DTYPE is defined in bn.h - uint{8,16,32,64}_t */
