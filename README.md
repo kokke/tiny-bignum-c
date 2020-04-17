@@ -37,6 +37,7 @@ struct bn
 
 This is the public / exported API:
 ```C
+/* Initialization functions: */
 void bignum_init(struct bn* n); /* n gets zero-initialized */
 void bignum_from_int(struct bn* n, DTYPE_TMP i);
 int  bignum_to_int(struct bn* n);
@@ -49,6 +50,7 @@ void bignum_sub(struct bn* a, struct bn* b, struct bn* c); /* c = a - b */
 void bignum_mul(struct bn* a, struct bn* b, struct bn* c); /* c = a * b */
 void bignum_div(struct bn* a, struct bn* b, struct bn* c); /* c = a / b */
 void bignum_mod(struct bn* a, struct bn* b, struct bn* c); /* c = a % b */
+void bignum_divmod(struct bn* a, struct bn* b, struct bn* c, struct bn* d); /* c = a/b, d = a%b */
 
 /* Bitwise operations: */
 void bignum_and(struct bn* a, struct bn* b, struct bn* c); /* c = a & b */
@@ -63,6 +65,7 @@ int  bignum_is_zero(struct bn* n);                         /* For comparison wit
 void bignum_inc(struct bn* n);                             /* Increment: add one to n */
 void bignum_dec(struct bn* n);                             /* Decrement: subtract one from n */
 void bignum_pow(struct bn* a, struct bn* b, struct bn* c); /* Calculate a^b -- e.g. 2^10 => 1024 */
+void bignum_isqrt(struct bn* a, struct bn* b);             /* Integer square root -- e.g. isqrt(5) => 2*/
 void bignum_assign(struct bn* dst, struct bn* src);        /* Copy src into dst -- dst := src */
 ```
     
