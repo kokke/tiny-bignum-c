@@ -65,7 +65,7 @@ int  bignum_is_zero(struct bn* n);                         /* For comparison wit
 void bignum_inc(struct bn* n);                             /* Increment: add one to n */
 void bignum_dec(struct bn* n);                             /* Decrement: subtract one from n */
 void bignum_pow(struct bn* a, struct bn* b, struct bn* c); /* Calculate a^b -- e.g. 2^10 => 1024 */
-void bignum_isqrt(struct bn* a, struct bn* b);             /* Integer square root -- e.g. isqrt(5) => 2*/
+void bignum_isqrt(struct bn* a, struct bn* b);             /* Integer square root -- e.g. isqrt(5) => 2 */
 void bignum_assign(struct bn* dst, struct bn* src);        /* Copy src into dst -- dst := src */
 ```
     
