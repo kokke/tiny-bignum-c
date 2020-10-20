@@ -23,6 +23,8 @@ There may well be room for performance-optimizations and improvements.
 #include <assert.h>
 #include "bn.h"
 
+#include "randombytes.h"
+
 
 
 /* Functions for shifting number in-place. */
@@ -663,3 +665,14 @@ static void _rshift_one_bit(struct bn* a)
 }
 
 
+void bignum_random(struct bn *dst, struct bn *lb, struct bn *hb, unsigned int nbytes) {
+    require(dst, "dst is null");
+    require(lb, "lb is null");
+    require(hb, "hb is null");
+
+    do {
+        randombytes(dst->array, nbytes);
+        bignum_mod(dst, hb, dst);
+    } while (bignum_cmp(dst, lb) == SMALLER);
+
+}

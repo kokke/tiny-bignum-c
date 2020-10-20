@@ -3,7 +3,7 @@ project(tiny-bignum-c VERSION 1.0.1 LANGUAGES C)
 
 set(CMAKE_C_STANDARD 11)
 
-include_directories(randombytes)
+include_directories(randombytes .)
 
 
 set(BN_SRC
@@ -12,3 +12,5 @@ set(BN_SRC
 
 add_library(tiny_bignum ${BN_SRC})
 set_target_properties(tiny_bignum PROPERTIES VERSION ${PROJECT_VERSION})
+
+add_executable(random_test tests/random.c bn.h bn.c randombytes/randombytes.c randombytes/randombytes.h)
