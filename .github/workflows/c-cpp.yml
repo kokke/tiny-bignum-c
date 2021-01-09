@@ -1,4 +1,4 @@
-name: CI Automated testing
+name: CI
 
 on:
   push:
