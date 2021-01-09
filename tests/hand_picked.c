@@ -82,6 +82,6 @@ int main()
   printf("\n%d/%d tests successful.\n", npassed, ntests);
   printf("\n");
 
-  return 0;
+  return (ntests - npassed); /* 0 if all tests passed */
 }
 
