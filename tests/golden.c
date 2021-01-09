@@ -270,6 +270,6 @@ int main()
 
   printf("\n");
 
-  return 0;
+  return (ntests - npassed); /* 0 if all tests passed */
 }
 
