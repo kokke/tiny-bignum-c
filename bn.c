@@ -248,29 +248,55 @@ void bignum_mul(struct bn* a, struct bn* b, struct bn* c)
   require(b, "b is null");
   require(c, "c is null");
 
-  struct bn row;
-  struct bn tmp;
-  int i, j;
-
   bignum_init(c);
 
-  for (i = 0; i < BN_ARRAY_SIZE; ++i)
-  {
-    bignum_init(&row);
+  if (bignum_is_zero(a)) {return;}
+  if (bignum_is_zero(b)) {return;}
 
-    for (j = 0; j < BN_ARRAY_SIZE; ++j)
-    {
-      if (i + j < BN_ARRAY_SIZE)
-      {
-        bignum_init(&tmp);
-        DTYPE_TMP intermediate = ((DTYPE_TMP)a->array[i] * (DTYPE_TMP)b->array[j]);
-        bignum_from_int(&tmp, intermediate);
-        _lshift_word(&tmp, i + j);
-        bignum_add(&tmp, &row, &row);
-      }
-    }
-    bignum_add(c, &row, c);
+  struct bn tmp;
+  struct bn max_val;
+  bignum_from_int(&max_val, MAX_VAL);
+
+  struct bn a1;
+  DTYPE_TMP a0;
+  struct bn b1;
+  DTYPE_TMP b0;
+  struct bn z0;
+  struct bn z1;
+  struct bn z2;
+
+  bignum_rshift(a, &a1, WORD_SIZE*8);
+  bignum_rshift(b, &b1, WORD_SIZE*8);
+  a0 = (DTYPE_TMP)(a->array[0]);
+  b0 = (DTYPE_TMP)(b->array[0]);
+  DTYPE_TMP z0_small = a0*b0;
+
+  bignum_init(&z0);
+  z0.array[0] = z0_small & MAX_VAL;
+  z0.array[1] = (z0_small & (MAX_VAL << (WORD_SIZE*8))) >> (WORD_SIZE*8);
+  if (bignum_is_zero(&a1) && bignum_is_zero(&b1)) {
+    bignum_assign(c, &z0);
+    return;
   }
+  bignum_mul(&a1, &b1, &z2);
+  struct bn a0_big;
+  struct bn b0_big;
+  bignum_from_int(&a0_big, a0);
+  bignum_from_int(&b0_big, b0);
+
+  struct bn tmpa;
+  struct bn tmpb;
+  struct bn tmpz1;
+  bignum_add(&a1, &a0_big, &tmpa);
+  bignum_add(&b1, &b0_big, &tmpb);
+  bignum_mul(&tmpa, &tmpb, &tmpz1);
+  bignum_sub(&tmpz1, &z2, &tmpa);
+  bignum_sub(&tmpa, &z0, &z1);
+
+  bignum_lshift(&z2, &tmp, WORD_SIZE*8);
+  bignum_add(&tmp, &z1, c);
+  bignum_lshift(c, &tmp, WORD_SIZE*8);
+  bignum_add(&tmp, &z0, c);
 }
 
 
