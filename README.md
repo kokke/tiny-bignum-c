@@ -42,6 +42,8 @@ This is the public / exported API:
 void bignum_init(struct bn* n); /* n gets zero-initialized */
 void bignum_from_int(struct bn* n, DTYPE_TMP i);
 int  bignum_to_int(struct bn* n);
+/* NOTE: The functions below are meant for testing mainly and expects input in hex-format and of a certain length */
+/*       See the implementation for details or the test-files for examples of how to use them. */
 void bignum_from_string(struct bn* n, char* str, int nbytes);
 void bignum_to_string(struct bn* n, char* str, int maxsize);
 
