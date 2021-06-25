@@ -251,25 +251,21 @@ void bignum_mul(struct bn* a, struct bn* b, struct bn* c)
   struct bn row;
   struct bn tmp;
   int i, j;
+  DTYPE_TMP intermediate, tmp;
 
   bignum_init(c);
 
   for (i = 0; i < BN_ARRAY_SIZE; ++i)
   {
-    bignum_init(&row);
+    intermediate = 0;
 
-    for (j = 0; j < BN_ARRAY_SIZE; ++j)
+    for (j = 0; i+j < BN_ARRAY_SIZE; ++j)
     {
-      if (i + j < BN_ARRAY_SIZE)
-      {
-        bignum_init(&tmp);
-        DTYPE_TMP intermediate = ((DTYPE_TMP)a->array[i] * (DTYPE_TMP)b->array[j]);
-        bignum_from_int(&tmp, intermediate);
-        _lshift_word(&tmp, i + j);
-        bignum_add(&tmp, &row, &row);
-      }
+      intermediate += ((DTYPE_TMP)a->array[i] * (DTYPE_TMP)b->array[j]);
+      tmp = c->array[i+j] + intermediate;
+      intermediate = tmp >> 32ull;
+      c->array[i+j] = (tmp & MAX_VAL);
     }
-    bignum_add(c, &row, c);
   }
 }
 
