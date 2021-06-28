@@ -20,6 +20,8 @@ There may well be room for performance-optimizations and improvements.
 
 */
 
+#include <stdio.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <assert.h>
 
