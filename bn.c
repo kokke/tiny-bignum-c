@@ -501,46 +501,23 @@ int bignum_is_zero(struct bn* n)
   return 1;
 }
 
-
-void bignum_pow(struct bn* a, struct bn* b, struct bn* c)
+void bignum_pow(struct bn* a_in, struct bn* b_in, struct bn* c)
 {
-  require(a, "a is null");
-  require(b, "b is null");
+  require(a_in, "a is null");
+  require(b_in, "b is null");
   require(c, "c is null");
 
-  struct bn tmp;
+  struct bn a, b, temp;
+  bignum_assign(&a, a_in);
+  bignum_assign(&b, b_in);
 
-  bignum_init(c);
-
-  if (bignum_cmp(b, c) == EQUAL)
-  {
-    /* Return 1 when exponent is 0 -- n^0 = 1 */
-    bignum_inc(c);
-  }
-  else
-  {
-    struct bn bcopy;
-    bignum_assign(&bcopy, b);
-
-    /* Copy a -> tmp */
-    bignum_assign(&tmp, a);
-
-    bignum_dec(&bcopy);
- 
-    /* Begin summing products: */
-    while (!bignum_is_zero(&bcopy))
-    {
-
-      /* c = tmp * tmp */
-      bignum_mul(&tmp, a, c);
-      /* Decrement b by one */
-      bignum_dec(&bcopy);
-
-      bignum_assign(&tmp, c);
+  bignum_from_int(c, 1); // c = 1
+  while (!bignum_is_zero(&b)) {
+    if (b.array[0]&1) { // if (b & 1) {
+      bignum_mul(c, &a, &temp); bignum_assign(c, &temp); // c *= a
     }
-
-    /* c = tmp */
-    bignum_assign(c, &tmp);
+    bignum_mul(&a, &a, &temp); bignum_assign(&a, &temp); // a *= a
+    bignum_rshift(&b, &temp, 1); bignum_assign(&b, &temp); // b = b >> 1
   }
 }
 
