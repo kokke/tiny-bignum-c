@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 
   if (argc < 5)
   {
-    printf("ERROR\n\nUsage:\n    %s [oper] [operand1] [operand2] [result]\n\nWhere oper means:\n    0 = add, 1 = sub, 2 = mul, 3 = div\n\nExample:\n    %s 3 0100 80 02\n\n    [divide 0x0100 by 0x80 and expect 0x02 as result] \n\n", argv[0], argv[0]);
+    printf("ERROR\n\nUsage:\n    %s [oper] [operand1] [operand2] [result]\n\nWhere oper means:\n    0 = add, 1 = sub, 2 = mul, 3 = div\n\n", argv[0]);
 
     return -1;
   }  
