@@ -91,6 +91,11 @@ See [`tests/factorial.c`](https://github.com/kokke/tiny-bignum-c/blob/master/tes
   A: Small size for one. ~500 lines of C-code compiling to 2-3kb ROM, using only modest amounts of RAM.
      Utilizing all bits by using a number base 2^{8,16,32} instead of 10 which is a usual choice.
 
+- *Q: Why no support for 64-bit word-size?*
+
+  A: All calculations are done in a temporary variable, which needs to bigger than the word-size (to detect overflow etc.).
+     So 64-bit word-size would need e.g. 128-bit temp-var. C99 only supports portable integers up to 64-bits.
+
 
 ### License
 All material in this repository is in the public domain.
