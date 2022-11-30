@@ -93,7 +93,7 @@ See [`tests/factorial.c`](https://github.com/kokke/tiny-bignum-c/blob/master/tes
 
 - *Q: Why no support for 64-bit word-size?*
 
-  A: All calculations are done in a temporary variable, which needs to bigger than the word-size (to detect overflow etc.).
+  A: All calculations are done in a temporary variable, which needs to be bigger than the word-size (to detect overflow etc.).
      So 64-bit word-size would need e.g. 128-bit temp-var. C99 only supports portable integers up to 64-bits.
 
 
