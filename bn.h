@@ -29,8 +29,9 @@ There may well be room for performance-optimizations and improvements.
   #define WORD_SIZE 4
 #endif
 
-/* Size of big-numbers in bytes */
-#define BN_ARRAY_SIZE    (128 / WORD_SIZE)
+/* Size of big-numbers in WORDS */ // because you dividing by WORD size
+// #define BN_ARRAY_SIZE    (128 / WORD_SIZE)
+#define BN_ARRAY_SIZE    1024
 
 
 /* Here comes the compile-time specialization for how large the underlying array size should be. */
@@ -97,6 +98,7 @@ void bignum_to_string(struct bn* n, char* str, int maxsize);
 void bignum_add(struct bn* a, struct bn* b, struct bn* c); /* c = a + b */
 void bignum_sub(struct bn* a, struct bn* b, struct bn* c); /* c = a - b */
 void bignum_mul(struct bn* a, struct bn* b, struct bn* c); /* c = a * b */
+void bignum_mul_alt(struct bn* a, struct bn* b, struct bn* c); /* c = a * b alternative, much faster method*/
 void bignum_div(struct bn* a, struct bn* b, struct bn* c); /* c = a / b */
 void bignum_mod(struct bn* a, struct bn* b, struct bn* c); /* c = a % b */
 void bignum_divmod(struct bn* a, struct bn* b, struct bn* c, struct bn* d); /* c = a/b, d = a%b */

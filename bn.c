@@ -274,6 +274,45 @@ void bignum_mul(struct bn* a, struct bn* b, struct bn* c)
 }
 
 
+void bignum_mul_alt(struct bn *a, struct bn *b, struct bn *c)
+{
+  require(a, "a is null");
+  require(b, "b is null");
+  require(c, "c is null");
+
+  bignum_init(c);
+  DTYPE_TMP tmp = 0;
+  DTYPE tmp_to_add = 0;
+
+  int usable_len = BN_ARRAY_SIZE;
+
+  /*  this section speads up algorithm by "cutting" len of bignum*/
+  for (int i = BN_ARRAY_SIZE - 1; i >= 0; --i)
+  {
+    if (a->array[i] != 0 || b->array[i] != 0)
+    {
+        usable_len = 2 * (i + 1);
+        break;
+    }
+  }
+
+  usable_len = usable_len > BN_ARRAY_SIZE ? BN_ARRAY_SIZE : usable_len;
+  //
+
+  for (int i = 0; i < usable_len; ++i)
+  {
+    c->array[i] += tmp_to_add;
+    tmp_to_add = tmp = 0;
+    for (int j = 0, k = i; j < i + 1 && j < usable_len; ++j, --k)
+    {
+      tmp = (DTYPE_TMP)a->array[j] * (DTYPE_TMP)b->array[k];
+      tmp_to_add += tmp >> 32;
+      c->array[i] += tmp;
+    }
+  }
+}
+
+
 void bignum_div(struct bn* a, struct bn* b, struct bn* c)
 {
   require(a, "a is null");

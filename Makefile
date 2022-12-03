@@ -10,6 +10,7 @@ all:
 	@$(CC) $(CFLAGS) bn.c ./tests/factorial.c   -o ./build/test_factorial
 	@$(CC) $(CFLAGS) bn.c ./tests/randomized.c  -o ./build/test_random
 	@#$(CC) $(CFLAGS) bn.c ./tests/rsa.c         -o ./build/test_rsa
+	@$(CC) $(CFLAGS) bn.c ./tests/mul_test.c         -o ./build/test_mul
 
 
 test:
