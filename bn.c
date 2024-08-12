@@ -147,14 +147,22 @@ void bignum_to_string(struct bn* n, char* str, int nbytes)
     j += 1;
   }
  
-  /* Move string j places ahead, effectively skipping leading zeros */ 
-  for (i = 0; i < (nbytes - j); ++i)
+  /* Detect whether bignum is zero or not */
+  if (j == 2*BIG_NUM_BYTES)
   {
-    str[i] = str[i + j];
+    str[0] = '0';
+    str[1] = 0;
   }
-
-  /* Zero-terminate string */
-  str[i] = 0;
+  else
+  {
+    /* Move string j places ahead, effectively skipping leading zeros */ 
+    for (i = 0; i < (nbytes - j); ++i)
+    {
+      str[i] = str[i + j];
+    }
+    /* Zero-terminate string */
+    str[i] = 0;
+  }
 }
 
 

@@ -29,8 +29,12 @@ There may well be room for performance-optimizations and improvements.
   #define WORD_SIZE 4
 #endif
 
+#ifndef BIG_NUM_BYTES
+  #define BIG_NUM_BYTES 128 
+#endif
+
 /* Size of big-numbers in bytes */
-#define BN_ARRAY_SIZE    (128 / WORD_SIZE)
+#define BN_ARRAY_SIZE    (BIG_NUM_BYTES / WORD_SIZE)
 
 
 /* Here comes the compile-time specialization for how large the underlying array size should be. */
