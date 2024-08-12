@@ -160,10 +160,9 @@ void bignum_to_string(struct bn* n, char* str, int nbytes)
     {
       str[i] = str[i + j];
     }
+    /* Zero-terminate string */
+    str[i] = 0;
   }
-  
-  /* Zero-terminate string */
-  str[i] = 0;
 }
 
 
