@@ -1,4 +1,5 @@
-![CI](https://github.com/kokke/tiny-bignum-c/workflows/CI/badge.svg)
+![CI](https://github.com/kokke/tiny-bignum-c/actions/workflows/c-cpp.yml/badge.svg)
+
 # tiny-bignum-c
 # A small multiple-precision integer implementation in C
 ### Description
