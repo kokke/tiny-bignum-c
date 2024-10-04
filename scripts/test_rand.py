@@ -101,7 +101,7 @@ while i < NTESTS:
     # avoid dividing by 0
     if oper2 == 0:
       oper2 += 1
-    expected = oper1 / oper2
+    expected = int(oper1 / oper2)
   elif operation == AND:
     expected = oper1 & oper2
   elif operation == OR:
