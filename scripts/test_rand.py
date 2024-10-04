@@ -120,7 +120,7 @@ while i < NTESTS:
   elif operation == RSHIFT:
     expected = oper1 >> oper2
   elif operation == ISQRT:
-		expected = int(math.sqrt(oper1));
+    expected = int(math.sqrt(oper1));
 
 
   # Convert to string to pass to C program
@@ -179,7 +179,4 @@ if len(failures) > 0:
   print("")
   print("\n".join(failures))
   print("")
-
-
-
 
