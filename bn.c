@@ -18,9 +18,6 @@ There may well be room for performance-optimizations and improvements.
 
 */
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <assert.h>
 #include "bn.h"
 
 
@@ -100,8 +97,6 @@ void bignum_from_string(struct bn* n, char* str, int nbytes)
   require(n, "n is null");
   require(str, "str is null");
   require(nbytes > 0, "nbytes must be positive");
-  require((nbytes & 1) == 0, "string format must be in hex -> equal number of bytes");
-  require((nbytes % (sizeof(DTYPE) * 2)) == 0, "string length must be a multiple of (sizeof(DTYPE) * 2) characters");
   
   bignum_init(n);
 
@@ -127,7 +122,6 @@ void bignum_to_string(struct bn* n, char* str, int nbytes)
   require(n, "n is null");
   require(str, "str is null");
   require(nbytes > 0, "nbytes must be positive");
-  require((nbytes & 1) == 0, "string format must be in hex -> equal number of bytes");
 
   int j = BN_ARRAY_SIZE - 1; /* index into array - reading "MSB" first -> big-endian */
   int i = 0;                 /* index into string representation. */
