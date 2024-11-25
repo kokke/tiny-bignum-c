@@ -69,6 +69,93 @@ static void test_rshift_largish_number(void)
   npassed += 1;
 }
 
+static void multiply_int(struct bn *input, DTYPE multiplier) {
+    struct bn bn_multiplier, tmp;
+    bignum_from_int(&bn_multiplier, multiplier);
+    bignum_mul(&bn_multiplier, input, &tmp);
+    bignum_assign(input, &tmp);
+}
+
+static void test_mul_int(void) {
+    ntests += 1;
+
+    const int multipliers[] = {1,
+                               3,
+                               8,
+                               2 + 4,
+                               1 + 8,
+                               16,
+                               64,
+                               256,
+                               1024,
+                               2048,
+                               2048 - 1
+    };
+    const int multiplierCount = sizeof(multipliers) / sizeof(multipliers[0]);
+    struct bn expected;
+    
+    bignum_from_int(&expected, 10);
+    
+    struct bn test;
+    bignum_from_int(&test, 10);
+    for (int i = 0; i < 10000; i++) {
+        const int multiplier = multipliers[i % multiplierCount];
+        multiply_int(&expected, multiplier);
+        bignum_mul_int(&test, multiplier);
+        const int comparison = bignum_cmp(&test, &expected);
+        assert(comparison == EQUAL);
+    }
+
+    npassed += 1;
+}
+
+static void add_int(struct bn *input, DTYPE addition) {
+    struct bn bn_addition, tmp;
+    bignum_from_int(&bn_addition, addition);
+    bignum_add(&bn_addition, input, &tmp);
+    bignum_assign(input, &tmp);
+}
+
+
+static void test_add_int(void) {
+    ntests += 1;
+
+    const int multipliers[] = {1,
+                               3,
+                               8,
+                               2 + 4,
+                               1 + 8,
+                               16,
+                               64,
+                               256,
+                               1024,
+                               2048,
+                               2048 - 1
+    };
+    const int multiplierCount = sizeof(multipliers) / sizeof(multipliers[0]);
+    struct bn expected;
+    
+    bignum_from_int(&expected, 10);
+    
+    struct bn test;
+    bignum_from_int(&test, 10);
+    DTYPE addition = 1;
+    for (int i = 0; i < 10000; i++) {
+        DTYPE newAddition = addition * multipliers[i % multiplierCount];
+        addition = addition ^ newAddition;
+        
+        const int multiplier = multipliers[i % multiplierCount];
+        multiply_int(&expected, multiplier);
+        add_int(&expected, addition);
+        
+        bignum_mul_int(&test, multiplier);
+        bignum_add_int(&test, addition);
+        const int comparison = bignum_cmp(&test, &expected);
+        assert(comparison == EQUAL);
+    }
+
+    npassed += 1;
+}
 
 
 int main()
@@ -78,7 +165,9 @@ int main()
   test_evil();
   test_over_and_underflow();
   test_rshift_largish_number();
-
+  test_mul_int();
+  test_add_int();
+  
   printf("\n%d/%d tests successful.\n", npassed, ntests);
   printf("\n");
 

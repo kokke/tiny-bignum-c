@@ -273,6 +273,37 @@ void bignum_mul(struct bn* a, struct bn* b, struct bn* c)
   }
 }
 
+void bignum_mul_int(struct bn* a, DTYPE b) {
+    require(a, "a is null");
+    int i;
+    DTYPE_TMP tmp;
+    DTYPE_TMP carry = 0;
+    for (i = 0; i < BN_ARRAY_SIZE; ++i) {
+        tmp = a->array[i];
+        tmp *= b;
+        tmp += carry;
+        a->array[i] = (DTYPE)tmp;
+        carry = tmp >> WORD_SIZE * 8;
+    }
+}
+
+void bignum_add_int(struct bn* a, DTYPE b) {
+    require(a, "a is null");
+    int i;
+    DTYPE_TMP tmp;
+    DTYPE_TMP carry = 0;
+
+    for (i = 0; i < BN_ARRAY_SIZE; ++i) {
+        tmp = a->array[i];
+        tmp += b;
+        tmp += carry;
+        a->array[i] = (DTYPE)tmp;
+        carry = tmp >> WORD_SIZE * 8;
+        if (carry == 0) {
+            break;
+        }
+    }
+}
 
 void bignum_div(struct bn* a, struct bn* b, struct bn* c)
 {
